@@ -8,7 +8,7 @@ const session = require('express-session');
 const connectDB= require('./server/config/db')
 
  const app = express();
- const PORT= 5001|| process.env.PORT;
+ const PORT= 5002|| process.env.PORT;
 
  connectDB();  
 
@@ -26,12 +26,17 @@ app.use(session({
 }));
 
 
- app.use(express.static('public'));
 
- app.use(expresslayout);
- app.set('layout','./layouts/main');
- app.set('view engine','ejs');
+app.use(express.static('public'));
 
+app.use(expresslayout);
+app.set('layout','./layouts/main');
+app.set('view engine','ejs');
+
+const methodOverride = require('method-override');
+
+// Use method-override middleware
+app.use(methodOverride('_method'));
  app.use('/',require('./server/routes/main'));
  app.use('/',require('./server/routes/admin'));
 
